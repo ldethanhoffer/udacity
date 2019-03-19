@@ -1,0 +1,1 @@
+Some projects completed as part of the udacity machine learning engineer nanodegree
