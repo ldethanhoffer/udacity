@@ -1,0 +1,139 @@
+
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{graphicx}%
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+
+\theoremstyle{plain} \numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{finalremark}[theorem]{Final Remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}{Question} \topmargin-2cm
+
+
+\newcommand{\mor}{\longrightarrow}
+\newcommand{\fun}{\mapsto}
+\newcommand{\iso}{\longleftrightarrow}
+\renewcommand{\d}[1]{\ensuremath{\mathbb{#1}}}
+\renewcommand{\r}[1]{\ensuremath{\mathcal{#1}}}
+\newcommand{\f}[1]{\ensuremath{\mathfrak{#1}}}
+\newcommand{\blf}[2]{\langle #1,#2\rangle}
+\renewcommand{\b}{\bullet}
+\newcommand{\ds}{\oplus}
+\newcommand{\tr}{\otimes}
+\newcommand{\vtr}{\boxtimes}
+\newcommand{\leftexp}[2]{{\vphantom{#2}}^{#1}{#2}}
+
+\def\proj{\operatorname{proj}}
+\def\Perf{\operatorname{Perf}}
+\def\End{\operatorname{End}}
+\def\BiMod{\operatorname{BiMod}}
+\def\bimod{\operatorname{bimod}}
+\def\Gr{\operatorname{Gr}}
+\def\QGr{\operatorname{QGr}}
+\def\Tors{\operatorname{Tors}}
+\def\Proj{\operatorname{Proj}}
+\def\Spec{\operatorname{Spec}}
+\def\Qcoh{\operatorname{Qcoh}}
+\def\coh{\operatorname{coh}}
+\def\RHom{\operatorname{RHom}}
+\def\Hom{\operatorname{Hom}}
+\def\R{\operatorname{R}}
+\def\mod{\operatorname{mod}}
+\def\ker{\operatorname{ker}}
+\def\coker{\operatorname{coker}}
+\def\im{\operatorname{im}}
+\def\rk{\operatorname{rk}}
+\def\lrk{\operatorname{l.rk}}
+\def\rrk{\operatorname{r.rk}}
+\def\Ext{\operatorname{Ext}}
+\def\dim{\operatorname{dim}}
+\def\Mod{\operatorname{Mod}}
+\def\MCM{\operatorname{MCM}}
+\def\Sing{\operatorname{Sing}}
+\textwidth6in
+
+\setlength{\topmargin}{0in} \addtolength{\topmargin}{-\headheight}
+\addtolength{\topmargin}{-\headsep}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\textheight}{8.3in}
+
+\oddsidemargin  0.0in \evensidemargin 0.0in \parindent0em
+
+\pagestyle{fancy}\lhead{Capstone Project} \rhead{June 2017}
+\chead{{\large{\bf Detecting Counterfeit Banknotes}}} \lfoot{} \rfoot{\bf \thepage} \cfoot{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,      
+    urlcolor=blue,
+}
+ 
+\urlstyle{same}
+\newcounter{list}
+
+\begin{document}
+
+\section{Domain Background}
+
+The proposed project centers around the art of counterfeiting banknotes. Know colloquially as \emph{worlds second oldest profession}, this art dates back to the invention of money itself. From counterfeiters reproducing gold coins in Roman times using base metals, to the use of Mulberry trees to imitate banknotes 13th century China\footnote{\label{note1} \url{en.wikipedia.org/wiki/Counterfeit}}, counterfeiters have been playing a fiendish cat-and-mouse game with governments that makes for a fascinating history. Counterfeiting techniques were even used as a form of warfare in the U.S. Revolutionary war of independence by the British in order to devaluate the newly created dollar \textsuperscript{\ref{note1}}.\\
+The problem of counterfeiting is not just one of historical importance however. In fact it is estimated that counterfeiting produces an annual increase in inflation resulting in a  250 billion dollar loss annually for the us economy \footnote{\url{http://www.ipwatchdog.com/2010/08/30/counterfeiting-costs-us-businesses/id=12336/}}.\\ 
+In more modern times, the techniques used have grown very subtle as anti-counterfeiting measures have entered into the 21st century. The main way to detect counterfeit money has however remained unchanged: the note is ran through a subsequent series of tests to determine any possible foul play. 
+
+\section{Problem Statement}
+
+The problem this proposal wishes to consider is to determine whether it is possible to build an algorithm that detects foul play simply by scanning a bill, and extracting any anomalies in the resulting image.\\ 
+More specifically, we will encode the image of a bill into a set of 5 data points which correspond to statistical features associated with the image and train a learning algorithm capable of classifying real bills from counterfeit ones.
+
+\section{dataset}
+
+The dataset in question was obtained as from the UCI machine learning repository\footnote{\url{https://archive.ics.uci.edu/ml/datasets/banknote+authentication}}. It serves as the basis for a regression analysis performed by Gillich and Lowesh in \cite{BNA}. In loc. sit. the authors first scanned a set of 1372 banknotes of which 610  were forged into 400$\times$ 400 pixel images. To each image, a \emph{Wavelet transform} was applied. This is a mathematical tools which finds its origins in the theory of Fourier transforms and allows one to encode the image data very efficiently. For our purposes it will be sufficient to note that it compresses an image by extracting coefficients which follow an underlying  probability distribution. The data set in question consists of a description of 4 statistical properties of this distribution:
+\begin{enumerate}
+\item the variance
+\item the  sample skewness
+\item the kurtosis	
+\item the Shannon entropy
+\end{enumerate}
+Together with a binary target variable indicating whether the note is real or counterfeit
+
+\section{Solution Statement}
+Since the four feature variable all describe an aspect of the the shape of the distribution that encodes the compressed image, we expect an appropriate linear combination of this features to be indicative of whether a banknote is counterfeit. Our first proposed solution will thus take form of a logistic classifier.This classifier its speed and simplicity, is considered an industry workhorse for binary classification problems \footnote{\url{https://docs.microsoft.com/en-us/azure/machine-learning/machine-learning-algorithm-choice}}. Although this particular problem seems to be a tad singular in nature, many related problems have been treated through the use of logistic regression: mortality risk assessment based off the descriptive statistics of cardiac data\footnote{\url{http://ieeexplore.ieee.org/document/6420438/}} or the detection of loan defaults based off demographics \footnote{\url{https://smartdrill.com/pdf/Credit\%20Risk\%20Analysis.pdf}} to name but two.
+
+ We will also fit an ID3 classifier to account for the possibility of a nonlinear relation. Finally, we will cluster the data using a support vector machine.
+
+\section{Evaluation Metrics}
+To evaluate the performance of the model, we intend to use the tools available to us through scikit-learn. More precisely, the will be measured be analyzing precision, recall and the f1 score of the classifier.
+
+\section{Benchmark Model}
+
+As a benchmark model, we will train and test our data by running $k$-nearest neighbor out of the box. After finetuning the various classifiers proposed in \S 4,wWe will relate the evaluation metrics against the benchmark. This will give and objective way to compare the improvement made by each classifier as it gets calibrated properly.\\
+
+\section{Project Design}
+The workflow of the project will be subdivided as follows:
+\subsection{Data Preprocessing}
+As a preliminary step, we will provide an overview of the data set through descriptive statistics (min/max/quartiles etc) and exhibit a scatterplot of correlations. This information will allow us to preprocess the data accordingly by applying any necessary feature scaling, removing correlated variables if any and removing outliers if any.
+\subsection{Fitting the Classifiers}
+As a next step, we will build a logistic classifier.The data will be randomized and split into training and testing sets (75\%-25\%).\\
+Subsequently, we plan on fitting the various classifiers (logistic, ID3) to the data and finetuning. To this end, we will analyze how the data gets either over- or underfitted. Based of these conclusions, we may choose to optimize the regularization parameter through a gridsearch in the case of logistic classification and tweak parameters for the ID3 classifier such as the maximal depth etc. 
+
+\subsection{Evaluating the model} 
+Finally, we will analyze the model's performance using the metrics described in  \S 5 and compare them against the benchmark.
+
+
+\bibliographystyle{alpha}
+\bibliography{proposal}
+\end{document}

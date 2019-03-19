@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: /Users/Louis/Documents/banknote_forgery/.texpadtmp/banknote_forgery_report.aux
+The style file: alpha.bst
+Database file #1: ../banknote_forgery_bib.bib
+Warning--to sort, need author or key in wikiforge
+Warning--to sort, need author or key in usforge
+Warning--empty title in wikiprof
+Warning--empty journal in wikiprof
+Warning--empty author in usforge
+Warning--empty journal in usforge
+Warning--empty author in wikiforge
+Warning--empty journal in wikiforge
+You've used 4 entries,
+            2543 wiz_defined-function locations,
+            575 strings with 5075 characters,
+and the built_in function-call counts, 1041 in all, are:
+= -- 98
+> -- 29
+< -- 1
++ -- 8
+- -- 8
+* -- 73
+:= -- 170
+add.period$ -- 9
+call.type$ -- 4
+change.case$ -- 18
+chr.to.int$ -- 4
+cite$ -- 14
+duplicate$ -- 53
+empty$ -- 86
+format.name$ -- 10
+if$ -- 206
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 4
+newline$ -- 20
+num.names$ -- 6
+pop$ -- 23
+preamble$ -- 1
+purify$ -- 23
+quote$ -- 0
+skip$ -- 46
+stack$ -- 0
+substring$ -- 30
+swap$ -- 1
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 32
+warning$ -- 8
+while$ -- 5
+width$ -- 7
+write$ -- 42
+(There were 8 warnings)

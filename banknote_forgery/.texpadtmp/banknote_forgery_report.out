@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.0}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.0.1}{Overview}{section.0}% 2
+\BOOKMARK [2][-]{subsection.0.2}{Background to the problem}{section.0}% 3
+\BOOKMARK [1][-]{section.1}{Analyzing the dataset}{}% 4
+\BOOKMARK [2][-]{subsection.1.1}{a First exploration}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.2}{the Correlation between features}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.3}{Reducing the dimension}{section.1}% 7
+\BOOKMARK [2][-]{subsection.1.4}{Plotting the data}{section.1}% 8
+\BOOKMARK [2][-]{subsection.1.5}{Conclusions}{section.1}% 9
+\BOOKMARK [1][-]{section.2}{Building a neural net}{}% 10
+\BOOKMARK [2][-]{subsection.2.1}{Neural nets in Keras}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.2}{Finding the right model}{section.2}% 12
+\BOOKMARK [3][-]{subsubsection.2.2.1}{A coarse model}{subsection.2.2}% 13
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Optimizing the optimizer}{subsection.2.2}% 14
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Adding a hidden layer}{subsection.2.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.2.4}{Implementing Dropout}{subsection.2.2}% 16
+\BOOKMARK [1][-]{section.3}{Summary}{}% 17
+\BOOKMARK [1][-]{section.3}{References}{}% 18

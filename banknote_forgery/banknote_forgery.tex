@@ -1,0 +1,804 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font than Computer Modern for most use cases
+    \usepackage{palatino}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{banknote\_forgery}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    In this notebook, we will build a neural net capable of discerning real
+banknotes from forged ones based some of their statistical properties
+
+    We first import the necessary modules
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}145}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+          \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+          \PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k}{import} \PY{n}{display}
+          \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{f1\PYZus{}score}
+          \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\end{Verbatim}
+
+    We load the dataset as a pandas dictionary and extract the features and
+target as seperate datasets
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{data}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{features}\PY{o}{=}\PY{n}{data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{target}\PY{o}{=}\PY{n}{data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    \section{Preprocessing and Viewing the
+Data}\label{preprocessing-and-viewing-the-data}
+
+    Each element of the dataset contains 4 features wich describe the
+statistical properties of a banknote after scanning it and applying a
+wavelet transform. We begin by exhibiting some descriptive statistical
+properties of the dataset:
+
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+                var         skew         curt          ent
+         count  1372.000000  1372.000000  1372.000000  1372.000000
+         mean      0.433735     1.922353     1.397627    -1.191657
+         std       2.842763     5.869047     4.310030     2.101013
+         min      -7.042100   -13.773100    -5.286100    -8.548200
+         25\%      -1.773000    -1.708200    -1.574975    -2.413450
+         50\%       0.496180     2.319650     0.616630    -0.586650
+         75\%       2.821475     6.814625     3.179250     0.394810
+         max       6.824800    12.951600    17.927400     2.449500
+\end{Verbatim}
+        
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{To} \PY{n}{visualize} \PY{n}{these} \PY{n}{descriptive} \PY{n}{statistics}\PY{p}{,} \PY{n}{we} \PY{n}{display} \PY{n}{the} \PY{n}{boxplot}\PY{p}{:}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{features}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_9_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    It is clear that datapoints with a curtosis of 10 or higher are
+outliers. We compute these
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{features}\PY{p}{[}\PY{p}{(}\PY{n}{features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{curt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZgt{}}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+            \begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:}          var     skew     curt       ent
+         765  -3.8483 -12.8047  15.6824 -1.281000
+         766  -3.5681  -8.2130  10.0830  0.967650
+         780  -3.5801 -12.9309  13.1779 -2.567700
+         815  -3.1128  -6.8410  10.7402 -1.017200
+         816  -4.8554  -5.9037  10.9818 -0.821990
+         820  -4.0025 -13.4979  17.6772 -3.320200
+         821  -4.0173  -8.3123  12.4547 -1.437500
+         826  -4.2110 -12.4736  14.9704 -1.388400
+         827  -3.8073  -8.0971  10.1772  0.650840
+         841  -3.8858 -12.8461  12.7957 -3.135300
+         876  -3.5916  -6.2285  10.2389 -1.154300
+         877  -5.1216  -5.3118  10.3846 -1.061200
+         881  -4.4861 -13.2889  17.3087 -3.219400
+         882  -4.3876  -7.7267  11.9655 -1.454300
+         887  -3.2692 -12.7406  15.5573 -0.141820
+         902  -2.8957 -12.0205  11.9149 -2.755200
+         937  -2.9020  -7.6563  11.8318 -0.842680
+         938  -4.3773  -5.5167  10.9390 -0.408200
+         942  -3.3793 -13.7731  17.9274 -2.032300
+         943  -3.1273  -7.1121  11.3897 -0.083634
+         948  -3.4917 -12.1736  14.3689 -0.616390
+         949  -3.1158  -8.6289  10.4403  0.971530
+         963  -3.3863 -12.9889  13.0545 -2.720200
+         998  -3.0866  -6.6362  10.5405 -0.891820
+         999  -4.7331  -6.1789  11.3880 -1.074100
+         1003 -3.8203 -13.0551  16.9583 -2.305200
+         1004 -3.7181  -8.5089  12.3630 -0.955180
+         1009 -3.5713 -12.4922  14.8881 -0.470270
+         1023 -1.7713 -10.7665  10.2184 -1.004300
+         1024 -3.0061 -12.2377  11.9552 -2.160300
+         {\ldots}      {\ldots}      {\ldots}      {\ldots}       {\ldots}
+         1121 -4.6765  -5.6636  10.9690 -0.334490
+         1125 -3.5985 -13.6593  17.6052 -2.492700
+         1126 -3.3582  -7.2404  11.4419 -0.571130
+         1131 -4.0214 -12.8006  15.6199 -0.956470
+         1132 -3.3884  -8.2150  10.3315  0.981870
+         1146 -3.7300 -12.9723  12.9817 -2.684000
+         1181 -3.5895  -6.5720  10.5251 -0.163810
+         1182 -5.0477  -5.8023  11.2440 -0.390100
+         1186 -4.2440 -13.0634  17.1116 -2.801700
+         1187 -4.0218  -8.3040  12.5550 -1.509900
+         1192 -4.4018 -12.9371  15.6559 -1.680600
+         1193 -3.7573  -8.2916  10.3032  0.380590
+         1207 -3.7930 -12.7095  12.7957 -2.825000
+         1242 -3.6053  -5.9740  10.0916 -0.828460
+         1243 -5.0676  -5.1877  10.4266 -0.867250
+         1247 -4.4775 -13.0303  17.0834 -3.034500
+         1248 -4.1958  -8.1819  12.1291 -1.601700
+         1253 -4.5531 -12.5854  15.4417 -1.498300
+         1268 -3.9411 -12.8792  13.0597 -3.312500
+         1303 -3.9297  -6.0816  10.0958 -1.014700
+         1304 -5.2943  -5.1463  10.3332 -1.118100
+         1308 -4.6338 -12.7509  16.7166 -3.216800
+         1309 -4.2887  -7.8633  11.8387 -1.897800
+         1314 -3.5060 -12.5667  15.1606 -0.752160
+         1315 -2.9498  -8.2730  10.2646  1.162900
+         1329 -2.9672 -13.2869  13.4727 -2.627100
+         1364 -2.8391  -6.6300  10.4849 -0.421130
+         1365 -4.5046  -5.8126  10.8867 -0.528460
+         1369 -3.7503 -13.4586  17.5932 -2.777100
+         1370 -3.5637  -8.3827  12.3930 -1.282300
+         
+         [67 rows x 4 columns]
+\end{Verbatim}
+        
+    It turns out there are 67 outliers with a curtosis higher than 10. We
+remove them from the dataset.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}248}]:} \PY{n}{new\PYZus{}data}\PY{o}{=}\PY{n}{data}\PY{p}{[}\PY{p}{(}\PY{n}{features}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{curt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]}
+          \PY{n}{new\PYZus{}features}\PY{o}{=}\PY{n}{new\PYZus{}data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+          \PY{n}{new\PYZus{}target}\PY{o}{=}\PY{n}{new\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{forge}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\end{Verbatim}
+
+    Since we intend to build a learner using a neural net, we first compute
+the various correlations between the data, as correlated features could
+result in overfitting:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}256}]:} \PY{k+kn}{from} \PY{n+nn}{pandas}\PY{n+nn}{.}\PY{n+nn}{tools}\PY{n+nn}{.}\PY{n+nn}{plotting} \PY{k}{import} \PY{n}{scatter\PYZus{}matrix}
+          
+          \PY{n}{correlation}\PY{o}{=}\PY{n}{new\PYZus{}features}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pearson}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{n}{correlation}\PY{p}{)}
+          \PY{n}{scatter\PYZus{}matrix}\PY{p}{(}\PY{n}{new\PYZus{}features}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+           var      skew      curt       ent
+var   1.000000  0.137317 -0.239365  0.292094
+skew  0.137317  1.000000 -0.722368 -0.613270
+curt -0.239365 -0.722368  1.000000  0.427658
+ent   0.292094 -0.613270  0.427658  1.000000
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_15_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    It seems there is a hogh correlation between skewness and curtosis,
+which is to be expected. The other features seem to be uncorrelated
+
+    to visualize the features, we first perform a principal component
+analysis to reduce the \(4\)-dimensional feature space to \(3\), and
+then plot the transformed features.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}253}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{decomposition} \PY{k}{import} \PY{n}{PCA}
+          \PY{k+kn}{from} \PY{n+nn}{mpl\PYZus{}toolkits}\PY{n+nn}{.}\PY{n+nn}{mplot3d} \PY{k}{import} \PY{n}{Axes3D}
+          
+          
+          \PY{n}{pca}\PY{o}{=}\PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+          \PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{new\PYZus{}features}\PY{p}{)}
+          \PY{n}{first\PYZus{}pc}\PY{o}{=}\PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{second\PYZus{}pc}\PY{o}{=}\PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{third\PYZus{}pc}\PY{o}{=}\PY{n}{pca}\PY{o}{.}\PY{n}{components\PYZus{}}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+          \PY{n}{reduced\PYZus{}data}\PY{o}{=}\PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{new\PYZus{}features}\PY{p}{)}
+          
+          \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+          \PY{n}{ax} \PY{o}{=} \PY{n}{Axes3D}\PY{p}{(}\PY{n}{fig}\PY{p}{)}
+          
+          \PY{n}{x}\PY{o}{=}\PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{y}\PY{o}{=}\PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{z}\PY{o}{=}\PY{n}{reduced\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+          
+          
+          \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{z}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_18_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Building the Neural Net}\label{building-the-neural-net}
+
+    We first randomize the data and split into test and training set 2/3-1/3
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{n}{Y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{new\PYZus{}features}\PY{p}{,} \PY{n}{new\PYZus{}target}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.33}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+
+    Next, we import the necessary functionality from keras:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}135}]:} \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{utils} \PY{k}{import} \PY{n}{np\PYZus{}utils}
+          \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{callbacks} \PY{k}{import} \PY{n}{ModelCheckpoint}  
+          \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}
+          \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Dense}\PY{p}{,} \PY{n}{Dropout}
+          \PY{k+kn}{from} \PY{n+nn}{keras} \PY{k}{import} \PY{n}{optimizers}
+\end{Verbatim}
+
+    We reshape the training and testing data in a manner that is compatible
+to keras
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}257}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}translate from dataframe to numpy array}
+          
+          \PY{n}{x\PYZus{}train}\PY{o}{=}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}
+          \PY{n}{x\PYZus{}test}\PY{o}{=}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}
+          \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np\PYZus{}utils}\PY{o}{.}\PY{n}{to\PYZus{}categorical}\PY{p}{(}\PY{n}{Y\PYZus{}train}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+          \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{np\PYZus{}utils}\PY{o}{.}\PY{n}{to\PYZus{}categorical}\PY{p}{(}\PY{n}{Y\PYZus{}test}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+    Next, to view the results later on, we define a function that plots the
+learning curves for both the loss and accuracy
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}258}]:} \PY{k}{def} \PY{n+nf}{learning\PYZus{}curves}\PY{p}{(}\PY{n}{history}\PY{p}{)}\PY{p}{:}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{history}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{history}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} summarize history for loss}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{history}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{history}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+    Next, we define a function that will compile and fit a neural network
+according to a predescribed optimizer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}259}]:} \PY{k}{def} \PY{n+nf}{comp\PYZus{}fit}\PY{p}{(}\PY{n}{model}\PY{p}{,}\PY{n}{sgd}\PY{p}{)}\PY{p}{:}
+              \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{10}
+              \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{optimizer}\PY{o}{=}\PY{n}{sgd}\PY{p}{,} \PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{checkpointer} \PY{o}{=} \PY{n}{ModelCheckpoint}\PY{p}{(}\PY{n}{filepath}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saved\PYZus{}models/weights.best.from\PYZus{}scratch.hdf5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{save\PYZus{}best\PYZus{}only}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+              \PY{n}{history}\PY{o}{=}\PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{validation\PYZus{}data}\PY{o}{=}\PY{p}{(}\PY{n}{x\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{)}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{n}{epochs}\PY{p}{,} \PY{n}{callbacks}\PY{o}{=}\PY{p}{[}\PY{n}{checkpointer}\PY{p}{]}\PY{p}{,}\PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,}  \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+              \PY{k}{return} \PY{n}{history}
+\end{Verbatim}
+
+    As a first simpe model, we implement logistic regression according using
+the standard rmsprop optimizer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}266}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}build a logistical regression first}
+          \PY{n}{logmodel}\PY{o}{=}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+          \PY{n}{logmodel}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{history}\PY{o}{=}\PY{n}{comp\PYZus{}fit}\PY{p}{(}\PY{n}{logmodel}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rmsprop}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{learning\PYZus{}curves}\PY{p}{(}\PY{n}{history}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 874 samples, validate on 431 samples
+Epoch 1/10
+660/874 [=====================>{\ldots}] - ETA: 0s - loss: 1.2631 - acc: 0.1712Epoch 00000: val\_loss improved from inf to 1.22233, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 3s - loss: 1.2498 - acc: 0.1682 - val\_loss: 1.2223 - val\_acc: 0.1717
+Epoch 2/10
+620/874 [====================>{\ldots}] - ETA: 0s - loss: 1.2031 - acc: 0.1661Epoch 00001: val\_loss improved from 1.22233 to 1.13874, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 1.1584 - acc: 0.1716 - val\_loss: 1.1387 - val\_acc: 0.1810
+Epoch 3/10
+600/874 [===================>{\ldots}] - ETA: 0s - loss: 1.1072 - acc: 0.2000Epoch 00002: val\_loss improved from 1.13874 to 1.06337, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 1.0784 - acc: 0.2002 - val\_loss: 1.0634 - val\_acc: 0.1926
+Epoch 4/10
+560/874 [==================>{\ldots}] - ETA: 0s - loss: 1.0393 - acc: 0.2143Epoch 00003: val\_loss improved from 1.06337 to 0.99261, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 1.0064 - acc: 0.2151 - val\_loss: 0.9926 - val\_acc: 0.2297
+Epoch 5/10
+540/874 [=================>{\ldots}] - ETA: 0s - loss: 0.9419 - acc: 0.2630Epoch 00004: val\_loss improved from 0.99261 to 0.92455, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.9371 - acc: 0.2712 - val\_loss: 0.9245 - val\_acc: 0.2784
+Epoch 6/10
+780/874 [=========================>{\ldots}] - ETA: 0s - loss: 0.8876 - acc: 0.3128Epoch 00005: val\_loss improved from 0.92455 to 0.86678, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.8741 - acc: 0.3146 - val\_loss: 0.8668 - val\_acc: 0.3643
+Epoch 7/10
+600/874 [===================>{\ldots}] - ETA: 0s - loss: 0.8375 - acc: 0.3883Epoch 00006: val\_loss improved from 0.86678 to 0.81052, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.8147 - acc: 0.4211 - val\_loss: 0.8105 - val\_acc: 0.4640
+Epoch 8/10
+620/874 [====================>{\ldots}] - ETA: 0s - loss: 0.7688 - acc: 0.5097Epoch 00007: val\_loss improved from 0.81052 to 0.75749, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.7602 - acc: 0.5286 - val\_loss: 0.7575 - val\_acc: 0.5406
+Epoch 9/10
+740/874 [========================>{\ldots}] - ETA: 0s - loss: 0.7125 - acc: 0.6270Epoch 00008: val\_loss improved from 0.75749 to 0.70682, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.7083 - acc: 0.6362 - val\_loss: 0.7068 - val\_acc: 0.6427
+Epoch 10/10
+580/874 [==================>{\ldots}] - ETA: 0s - loss: 0.6625 - acc: 0.7172Epoch 00009: val\_loss improved from 0.70682 to 0.65541, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6552 - acc: 0.7094 - val\_loss: 0.6554 - val\_acc: 0.7077
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_31_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_31_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The model seems to fit the data rather nicely with an accuracy of 70\%,
+and a loss function that decays nicely to 0.7. To improve the accuracy,
+we change the optimizer to an Adam optimizer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}272}]:} \PY{n}{log\PYZus{}model}\PY{o}{=}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+          \PY{n}{log\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{history}\PY{o}{=}\PY{n}{comp\PYZus{}fit}\PY{p}{(}\PY{n}{log\PYZus{}model}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{learning\PYZus{}curves}\PY{p}{(}\PY{n}{history}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 874 samples, validate on 431 samples
+Epoch 1/10
+840/874 [===========================>..] - ETA: 0s - loss: 1.2969 - acc: 0.5560Epoch 00000: val\_loss improved from inf to 1.22791, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 4s - loss: 1.3047 - acc: 0.5526 - val\_loss: 1.2279 - val\_acc: 0.5824
+Epoch 2/10
+820/874 [===========================>..] - ETA: 0s - loss: 1.1068 - acc: 0.5744Epoch 00001: val\_loss improved from 1.22791 to 1.01087, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 1.0836 - acc: 0.5767 - val\_loss: 1.0109 - val\_acc: 0.6172
+Epoch 3/10
+780/874 [=========================>{\ldots}] - ETA: 0s - loss: 0.8938 - acc: 0.5910Epoch 00002: val\_loss improved from 1.01087 to 0.82684, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.8889 - acc: 0.5973 - val\_loss: 0.8268 - val\_acc: 0.6450
+Epoch 4/10
+780/874 [=========================>{\ldots}] - ETA: 0s - loss: 0.7539 - acc: 0.6372Epoch 00003: val\_loss improved from 0.82684 to 0.67411, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.7283 - acc: 0.6522 - val\_loss: 0.6741 - val\_acc: 0.6961
+Epoch 5/10
+820/874 [===========================>..] - ETA: 0s - loss: 0.5914 - acc: 0.6963Epoch 00004: val\_loss improved from 0.67411 to 0.55501, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5932 - acc: 0.6934 - val\_loss: 0.5550 - val\_acc: 0.7285
+Epoch 6/10
+840/874 [===========================>..] - ETA: 0s - loss: 0.4947 - acc: 0.7298Epoch 00005: val\_loss improved from 0.55501 to 0.46040, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.4916 - acc: 0.7300 - val\_loss: 0.4604 - val\_acc: 0.7471
+Epoch 7/10
+700/874 [=======================>{\ldots}] - ETA: 0s - loss: 0.4148 - acc: 0.7700Epoch 00006: val\_loss improved from 0.46040 to 0.40310, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.4206 - acc: 0.7654 - val\_loss: 0.4031 - val\_acc: 0.7981
+Epoch 8/10
+760/874 [=========================>{\ldots}] - ETA: 0s - loss: 0.3852 - acc: 0.8158Epoch 00007: val\_loss improved from 0.40310 to 0.36700, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.3782 - acc: 0.8238 - val\_loss: 0.3670 - val\_acc: 0.8376
+Epoch 9/10
+800/874 [==========================>{\ldots}] - ETA: 0s - loss: 0.3523 - acc: 0.8400Epoch 00008: val\_loss improved from 0.36700 to 0.34556, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.3523 - acc: 0.8455 - val\_loss: 0.3456 - val\_acc: 0.8608
+Epoch 10/10
+860/874 [============================>.] - ETA: 0s - loss: 0.3372 - acc: 0.8558Epoch 00009: val\_loss improved from 0.34556 to 0.33041, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.3352 - acc: 0.8570 - val\_loss: 0.3304 - val\_acc: 0.8701
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_33_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_33_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    as we can see, the accuracy has increased to 85\%. To further improve
+the network, we include a hidden layer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}271}]:} \PY{n}{log\PYZus{}model\PYZus{}hl}\PY{o}{=}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+          \PY{n}{log\PYZus{}model\PYZus{}hl}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{log\PYZus{}model\PYZus{}hl}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{history}\PY{o}{=}\PY{n}{comp\PYZus{}fit}\PY{p}{(}\PY{n}{log\PYZus{}model\PYZus{}hl}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{learning\PYZus{}curves}\PY{p}{(}\PY{n}{history}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 874 samples, validate on 431 samples
+Epoch 1/10
+740/874 [========================>{\ldots}] - ETA: 0s - loss: 0.6170 - acc: 0.5797Epoch 00000: val\_loss improved from inf to 0.60432, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 4s - loss: 0.6157 - acc: 0.5812 - val\_loss: 0.6043 - val\_acc: 0.5963
+Epoch 2/10
+700/874 [=======================>{\ldots}] - ETA: 0s - loss: 0.5987 - acc: 0.6100Epoch 00001: val\_loss improved from 0.60432 to 0.58879, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5987 - acc: 0.6076 - val\_loss: 0.5888 - val\_acc: 0.6125
+Epoch 3/10
+660/874 [=====================>{\ldots}] - ETA: 0s - loss: 0.5830 - acc: 0.6485Epoch 00002: val\_loss improved from 0.58879 to 0.57255, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5817 - acc: 0.6556 - val\_loss: 0.5725 - val\_acc: 0.6845
+Epoch 4/10
+700/874 [=======================>{\ldots}] - ETA: 0s - loss: 0.5657 - acc: 0.7171Epoch 00003: val\_loss improved from 0.57255 to 0.55522, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5642 - acc: 0.7220 - val\_loss: 0.5552 - val\_acc: 0.7378
+Epoch 5/10
+680/874 [======================>{\ldots}] - ETA: 0s - loss: 0.5512 - acc: 0.7838Epoch 00004: val\_loss improved from 0.55522 to 0.53650, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5461 - acc: 0.7860 - val\_loss: 0.5365 - val\_acc: 0.7935
+Epoch 6/10
+860/874 [============================>.] - ETA: 0s - loss: 0.5280 - acc: 0.8151Epoch 00005: val\_loss improved from 0.53650 to 0.51633, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5271 - acc: 0.8181 - val\_loss: 0.5163 - val\_acc: 0.8353
+Epoch 7/10
+680/874 [======================>{\ldots}] - ETA: 0s - loss: 0.5097 - acc: 0.8353Epoch 00006: val\_loss improved from 0.51633 to 0.49488, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.5065 - acc: 0.8387 - val\_loss: 0.4949 - val\_acc: 0.8469
+Epoch 8/10
+660/874 [=====================>{\ldots}] - ETA: 0s - loss: 0.4913 - acc: 0.8606Epoch 00007: val\_loss improved from 0.49488 to 0.47141, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.4845 - acc: 0.8684 - val\_loss: 0.4714 - val\_acc: 0.8677
+Epoch 9/10
+840/874 [===========================>..] - ETA: 0s - loss: 0.4603 - acc: 0.8857Epoch 00008: val\_loss improved from 0.47141 to 0.44536, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.4605 - acc: 0.8867 - val\_loss: 0.4454 - val\_acc: 0.8979
+Epoch 10/10
+700/874 [=======================>{\ldots}] - ETA: 0s - loss: 0.4369 - acc: 0.9043Epoch 00009: val\_loss improved from 0.44536 to 0.41877, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.4346 - acc: 0.9050 - val\_loss: 0.4188 - val\_acc: 0.9095
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_35_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_35_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    The accuracy has now improved to 90\%. We finally include a dropout to
+see how this changes the accuracy:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}201}]:} \PY{n}{log\PYZus{}model\PYZus{}hl\PYZus{}dp}\PY{o}{=}\PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+          \PY{n}{log\PYZus{}model\PYZus{}hl\PYZus{}dp}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{log\PYZus{}model\PYZus{}hl\PYZus{}dp}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dropout}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{)}
+          \PY{n}{log\PYZus{}model\PYZus{}hl\PYZus{}dp}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{input\PYZus{}dim}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+          \PY{n}{history}\PY{o}{=}\PY{n}{comp\PYZus{}fit}\PY{p}{(}\PY{n}{log\PYZus{}model\PYZus{}hl\PYZus{}dp}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{learning\PYZus{}curves}\PY{p}{(}\PY{n}{history}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 874 samples, validate on 431 samples
+Epoch 1/10
+860/874 [============================>.] - ETA: 0s - loss: 0.7044 - acc: 0.4721Epoch 00000: val\_loss improved from inf to 0.69626, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 4s - loss: 0.7036 - acc: 0.4760 - val\_loss: 0.6963 - val\_acc: 0.4988
+Epoch 2/10
+820/874 [===========================>..] - ETA: 0s - loss: 0.6871 - acc: 0.5354Epoch 00001: val\_loss improved from 0.69626 to 0.68126, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6863 - acc: 0.5366 - val\_loss: 0.6813 - val\_acc: 0.6195
+Epoch 3/10
+840/874 [===========================>..] - ETA: 0s - loss: 0.6704 - acc: 0.5929Epoch 00002: val\_loss improved from 0.68126 to 0.66887, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6699 - acc: 0.5904 - val\_loss: 0.6689 - val\_acc: 0.7401
+Epoch 4/10
+860/874 [============================>.] - ETA: 0s - loss: 0.6696 - acc: 0.5767Epoch 00003: val\_loss improved from 0.66887 to 0.65627, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6699 - acc: 0.5744 - val\_loss: 0.6563 - val\_acc: 0.7981
+Epoch 5/10
+820/874 [===========================>..] - ETA: 0s - loss: 0.6574 - acc: 0.5939Epoch 00004: val\_loss improved from 0.65627 to 0.64454, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6608 - acc: 0.5904 - val\_loss: 0.6445 - val\_acc: 0.7610
+Epoch 6/10
+840/874 [===========================>..] - ETA: 0s - loss: 0.6457 - acc: 0.6226Epoch 00005: val\_loss improved from 0.64454 to 0.63255, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6461 - acc: 0.6178 - val\_loss: 0.6325 - val\_acc: 0.7517
+Epoch 7/10
+800/874 [==========================>{\ldots}] - ETA: 0s - loss: 0.6390 - acc: 0.6138Epoch 00006: val\_loss improved from 0.63255 to 0.61977, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6418 - acc: 0.6076 - val\_loss: 0.6198 - val\_acc: 0.7494
+Epoch 8/10
+760/874 [=========================>{\ldots}] - ETA: 0s - loss: 0.6285 - acc: 0.6474Epoch 00007: val\_loss improved from 0.61977 to 0.60637, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6325 - acc: 0.6362 - val\_loss: 0.6064 - val\_acc: 0.7796
+Epoch 9/10
+700/874 [=======================>{\ldots}] - ETA: 0s - loss: 0.6207 - acc: 0.6600Epoch 00008: val\_loss improved from 0.60637 to 0.59183, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6213 - acc: 0.6510 - val\_loss: 0.5918 - val\_acc: 0.7912
+Epoch 10/10
+800/874 [==========================>{\ldots}] - ETA: 0s - loss: 0.6029 - acc: 0.6837Epoch 00009: val\_loss improved from 0.59183 to 0.57360, saving model to saved\_models/weights.best.from\_scratch.hdf5
+874/874 [==============================] - 0s - loss: 0.6008 - acc: 0.6865 - val\_loss: 0.5736 - val\_acc: 0.8051
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_37_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{banknote_forgery_files/banknote_forgery_37_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Not surprisingly, this decreases the accuracy, as the network was
+already learning almost optimally
+
+    we finally create a function that predicts whether a banknote is real
+depending on the model and check it on both a real and forged banknote:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}310}]:} \PY{k}{def} \PY{n+nf}{classify}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{p}{:}
+              \PY{n}{features}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{features}\PY{p}{]}\PY{p}{)}
+              \PY{n}{prediction}\PY{o}{=}\PY{n}{log\PYZus{}model\PYZus{}hl}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+              \PY{n}{prediction}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+              \PY{k}{if} \PY{n}{prediction} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the banknote is forged}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{k}{else}\PY{p}{:}
+                  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the banknote is real}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}311}]:} \PY{n}{classify}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{3.621600}\PY{p}{,}\PY{l+m+mf}{8.66610}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.807300}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.446990}\PY{p}{]} \PY{p}{)}
+          \PY{n}{classify}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.747900}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{5.82300}\PY{p}{,}\PY{l+m+mf}{5.869900} \PY{p}{,}\PY{l+m+mf}{1.212000}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+the banknote is real
+the banknote is forged
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
