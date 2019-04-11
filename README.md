@@ -1,1 +1,1 @@
-Some projects completed as part of the udacity machine learning engineer nanodegree
+Some projects completed as part of the [udacity machine learning engineer nanodegree](https://www.udacity.com/course/machine-learning-engineer-nanodegree--nd009t)
